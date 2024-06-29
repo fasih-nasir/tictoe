@@ -67,8 +67,8 @@ A short introduction about the project's GitHub profile or the organization behi
 ## Screenshots 📸
 
 - 👨‍💻 All of my projects are available at [https://fasih-nasirall.netlify.app/]
+- ![image](https://github.com/Fasih-Nasir/tictoe/assets/154458171/f079ea8d-7fd3-4af9-9feb-58e2edfb62e5)
 
-- 📝 I regularly write articles on [https://fasihnasirportfolio.netlify.app/](https://fasihnasirportfolio.netlify.app/)
 
 - 📫 How to reach me **fasihnasir12@gmail.com**
 
