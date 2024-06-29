@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe Game</title>
+  <!-- BOOTSTRPA 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+   <!-- FONT FAMILY -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
+   <style>
+    body{
+        background-color: #FBAB7E;
+    background: #f46b45;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #eea849, #f46b45);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #eea849, #f46b45); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+        font-family: PLAY;
+    }#none{
+        background-color: white;
+        margin: 15px 0px;
+        padding:30px 20px !important;
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+        /* border: 2px solid green !important; */
+    }
+        .box{
+            font-weight: bolder;
+            text-align: center !important;
+            align-items: center !important;
+            font-size: 24px !important;
+            display: flex !important;
+justify-content: center;
+            display: inline;
+            height: 100px; 
+            width: 100px ;
+            font-size: 10px;
+            /* border: 1px solid lightgrey; */
+            padding:0px 10px;
+
+        }
+#result{
+    color: #f46b45;
+    background-color: white;
+    height: 50px;
+    width: 200px;
+    text-align: center;
+    padding: 7px 0px;
+    border-radius:40px ;
+}
+    
+    </style>
+</head>
+<body>
+    <div class="container d-flex align-items-center justify-content-center flex-column">
+    <h2 class="py-4 text-white">Tic Tac Toe Game</h2>
+    <div id="none">    
+        <div class="row">
+        <div class="box col-3" style="border-right:2px dotted grey;border-bottom:2px dotted grey;" data-index="0">.</div>
+<div class="box col-3"style="border-right:2px dotted grey;border-bottom:2px dotted grey;" data-index="1">.</div>
+<div class="box col-3"style="border-bottom:2px dotted grey;" data-index="2">.</div>
+</div>
+<div class="row">
+    <h3 class="box col-3"style="border-right:2px dotted grey;border-bottom:2px dotted grey;" data-index="3">.</h3>
+    <h3 class="box col-3"style="border-right:2px dotted grey;border-bottom:2px dotted grey;" data-index="4">.</h3>
+    <h3 class="box col-3" style="border-bottom:2px dotted grey;"data-index="5">.</h3>
+    </div>
+    <div class="row">
+<h3 class="box col-3" style="border-right:2px dotted grey;"data-index="6">.</h3>
+<h3 class="box col-3" style="border-right:2px dotted grey;"data-index="7">.</h3>
+<h3 class="box col-3"style="" data-index="8">.</h3>
+</div>
+</div>
+
+<h3 id="result">Result</h3>
+</div>
+<script>
+    var num=0;
+   
+    document.addEventListener("click",(e)=>{
+
+        gameOver = false;
+        if (gameOver) return; 
+        var box=document.getElementsByClassName("box")
+        var a=e.target.getAttribute("data-index")
+    var res;
+    if (a !== null && box[a].innerHTML === ".") {
+                if (num == 0) {
+                    box[a].innerHTML = "X";
+                    num = 1;
+                } else {
+                    box[a].innerHTML = "O";
+                    num = 0;
+                }
+if(check("X")){
+    res=document.getElementById("result").innerHTML=`X wins` 
+
+
+}
+else if(check("O")){
+        res=document.getElementById("result").innerHTML=`O wins` 
+
+}
+else if(draw()){
+        res=document.getElementById("result").innerHTML=`Draw`
+        
+}
+
+function check(inner){
+    console.log(inner);
+    if((box[0].innerHTML == inner && box[1].innerHTML == inner&& box[2].innerHTML == inner)||
+    (box[3].innerHTML == inner && box[4].innerHTML == inner&& box[5].innerHTML == inner)||
+    (box[6].innerHTML == inner && box[7].innerHTML == inner&& box[8].innerHTML == inner)||
+    (box[0].innerHTML == inner && box[3].innerHTML == inner&& box[6].innerHTML == inner)||
+    (box[1].innerHTML == inner && box[4].innerHTML == inner&& box[7].innerHTML == inner)||
+    (box[2].innerHTML == inner && box[5].innerHTML == inner&& box[8].innerHTML == inner)||
+    (box[0].innerHTML == inner && box[4].innerHTML == inner&& box[8].innerHTML == inner)||
+    (box[2].innerHTML == inner && box[4].innerHTML == inner&& box[6].innerHTML == inner)
+    
+){
+    res=document.getElementById("result").innerHTML=`${inner} wins`
+    
+}
+ // Highlight the winning combination
+ if (box[0].innerHTML == inner && box[1].innerHTML == inner && box[2].innerHTML == inner) {
+                    box[0].style.color = "red";
+                    box[1].style.color = "red";
+                    box[2].style.color = "red";
+                }
+                if (box[3].innerHTML == inner && box[4].innerHTML == inner && box[5].innerHTML == inner) {
+                    box[3].style.color = "red";
+                    box[4].style.color = "red";
+                    box[5].style.color = "red";
+                }
+                if (box[6].innerHTML == inner && box[7].innerHTML == inner && box[8].innerHTML == inner) {
+                    box[6].style.color = "red";
+                    box[7].style.color = "red";
+                    box[8].style.color = "red";
+                }
+                if (box[0].innerHTML == inner && box[3].innerHTML == inner && box[6].innerHTML == inner) {
+                    box[0].style.color = "red";
+                    box[3].style.color = "red";
+                    box[6].style.color = "red";
+                }
+                if (box[1].innerHTML == inner && box[4].innerHTML == inner && box[7].innerHTML == inner) {
+                    box[1].style.color = "red";
+                    box[4].style.color = "red";
+                    box[7].style.color = "red";
+                }
+                if (box[2].innerHTML == inner && box[5].innerHTML == inner && box[8].innerHTML == inner) {
+                    box[2].style.color = "red";
+                    box[5].style.color = "red";
+                    box[8].style.color = "red";
+                }
+                if (box[0].innerHTML == inner && box[4].innerHTML == inner && box[8].innerHTML == inner) {
+                    box[0].style.color = "red";
+                    box[4].style.color = "red";
+                    box[8].style.color = "red";
+                }
+                if (box[2].innerHTML == inner && box[4].innerHTML == inner && box[6].innerHTML == inner) {
+                    box[2].style.color = "red";
+                    box[4].style.color = "red";
+                    box[6].style.color = "red";
+                }
+
+}
+
+function draw() {
+            var box = document.getElementsByClassName("box");
+            for (let i = 0; i < box.length; i++) {
+                if (box[i].innerHTML === ".") {
+                    return false;
+                }
+            }
+            return true;
+        }
+}
+function remove(){
+    var box = document.getElementsByClassName("box");
+    for (let i = 0; i < box.length; i++) {
+                if (box[i].innerHTML === ".") {
+                    box[i].setAttribute("contenteditable","true")
+                    return false;
+                }
+            }
+            return true;
+}
+}
+)
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
