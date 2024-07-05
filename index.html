@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
             display: flex;
@@ -34,7 +35,7 @@
         .cell {
 
             font-family: play;
-            color: rgb(191, 191, 191);
+            color: rgb(149, 149, 149);
 transform: scale(1);
 transition: 0.9s ease;
             text-transform: capitalize;
@@ -51,6 +52,12 @@ transition: 0.9s ease;
         #reset {
             padding: 10px 20px;
             font-size: 1em;
+            transition: 1.5s ease;
+        }
+        #reset:hover{
+            background-color: white;
+            color: rgb(37, 37, 37);;
+            transform: scale(1.1);
         }
 
         .x {
@@ -68,19 +75,22 @@ transition: 0.9s ease;
             cursor: pointer;
         }
         #cont{
-
+            margin: 10px 0px;
+            text-align: center;
+            color: rgb(155, 155, 155);
+background-color: red;
             padding: 10px;
             box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
             display: grid;
-            grid-template-columns: repeat(3, 100px);
+            /* grid-template-columns: repeat(3, 100px); */
             margin-bottom: 20px;
             background-color: rgb(37, 37, 37);
-            background-color: rgb(0, 0, 0);
-            height: 300px;
-            width: 300px;
-            position: fixed; 
-            top: 15%;
-            display: none;
+            /* background-color: rgb(0, 0, 0); */
+            /* height: 300px; */
+            /* width: 300px; */
+            /* position: fixed;  */
+            /* top: 15%; */
+            /* display: none; */
             justify-content: center;
             flex-direction: row;
             opacity: 0.800;
@@ -104,6 +114,7 @@ transition: 0.9s ease;
             justify-content: center;
             flex-direction: row;
         }
+        
         #reset{
             background-color: rgb(36, 36, 36);
             color: white;
@@ -116,9 +127,46 @@ transition: 0.9s ease;
         font-weight: bolder;
         letter-spacing: 1.8px;
         }
+        .scale{
+            /* border: none !important; */
+            background-color: rgb(66, 64, 64);
+            /* color: rgb(255, 255, 255) !important; */
+            font-family: play;
+            color: rgb(197, 197, 197);
+            margin: 0px 1px;
+/* transform: scale(1.1); */
+transition: 0.9s ease;
+animation: 0.9s fn0 linear infinite;
+            text-transform: capitalize;
+            font-weight: 900;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 5em;
+            cursor: pointer;
+        }
+        @keyframes fn0 {
+            0%,100%{font-size: 5em}
+        50%{font-size: 4em;}
+        }
+        #res{
+            font-family: play;
+text-align: center !important;
+            text-align: center !important;
+            color: lightgrey !important;
+        }
+        h3{
+            color: white;
+            text-align: center;
+            position: fixed;
+            top: 20px;
+        }
     </style>
 </head>
 <body>
+
     <div class="container">
         <div id="board">
             <div class="cell" id="cell-0" style="border-right:2px dotted grey ;border-bottom:2px dotted grey;" data-index="0"></div>
@@ -138,79 +186,132 @@ transition: 0.9s ease;
             <div class="cell" id="cell-7" style="border-right:2px dotted grey;" data-index="7"></div>
             <div class="cell" id="cell-8" data-index="8"></div>
         </div>
+        <button id="reset"><i class="fa fa-refresh" aria-hidden="true"></i></button>
         <div id="cont">
-            <h1 id="res" style="font-size: 34px !important;"></h1>
+    <span id="res" >Result</span>
 
         </div>
-        <button id="reset">Reset</button>
     </div>
     <script>
+  var gameOver = false;
 
-        document.addEventListener("click", (e) => {
+document.addEventListener("click", function fn(e) {
+    if (gameOver) return;
 
-            var target = e.target.getAttribute("data-index");
-            var cell = document.querySelectorAll(".cell");
-            var arr = [];
-            var arr1 = [];
+    var target = e.target.getAttribute("data-index");
+    var cell = document.querySelectorAll(".cell");
+    var arr1 = [];
 
-            if (target !== null) {
-                if (cell[target].innerHTML === "") {
-                    cell[target].innerHTML = "X";
-                 
-                    function playAudio() {
-            var audio = document.getElementById("audio");
-            var audio1 = document.getElementById("audio1");
-            audio.play();
-            audio1.play();
+    if (target !== null) {
+        if (cell[target].innerHTML === "") {
+            cell[target].innerHTML = "X";
+            playAudio();
+            arr1.push(target);
+            check("X");
+        } else {
+            return;
         }
-        playAudio()
-                    arr1.push(target);
-                    check("X");
-                } else {
-                    return;
-                }
 
-                for (let i = 0; i < cell.length; i++) {
-                    var ran = Math.floor(Math.random() * 9);
+        for (let i = 0; i < cell.length; i++) {
+            var ran = Math.floor(Math.random() * 9);
 
-                    if (!arr.includes(ran) && cell[ran].innerHTML == "") {
-                        cell[ran].innerHTML = "O";
-                        function playAudio() {
-            var audio = document.getElementById("audio");
-            var audio1 = document.getElementById("audio1");
-            audio.play();
-            audio1.play();
+            if (!arr1.includes(ran) && cell[ran].innerHTML == "") {
+                cell[ran].innerHTML = "O";
+                playAudio();
+                check("O");
+                break;
+            }
         }
-        playAudio()
-                        check("O");
-                        break;
-                    }
-                }
-            }
+    }
 
-            function check(inner) {
-                console.log(inner);
-                if ((cell[0].innerHTML == inner && cell[1].innerHTML == inner && cell[2].innerHTML == inner) ||
-                    (cell[3].innerHTML == inner && cell[4].innerHTML == inner && cell[5].innerHTML == inner) ||
-                    (cell[6].innerHTML == inner && cell[7].innerHTML == inner && cell[8].innerHTML == inner) ||
-                    (cell[0].innerHTML == inner && cell[3].innerHTML == inner && cell[6].innerHTML == inner) ||
-                    (cell[1].innerHTML == inner && cell[4].innerHTML == inner && cell[7].innerHTML == inner) ||
-                    (cell[2].innerHTML == inner && cell[5].innerHTML == inner && cell[8].innerHTML == inner) ||
-                    (cell[0].innerHTML == inner && cell[4].innerHTML == inner && cell[8].innerHTML == inner) ||
-                    (cell[2].innerHTML == inner && cell[4].innerHTML == inner && cell[6].innerHTML == inner)) {
-                    // document.getElementById("res").innerHTML = `${inner} wins`;
-                    document.getElementById("res").className="res"
-                   document.getElementById("cont").style.display="flex"
-                   document.getElementById("cont").innerHTML=`${inner} wins`; 
-                   document.removeEventListener("click", arguments.callee);
-                }
-            }
-        });
+    function check(inner) {
+        console.log(inner);
 
-        document.getElementById("reset").addEventListener("click", () => {
-            location.reload();
-        });
+if(
+    (cell[0].innerHTML == inner && cell[1].innerHTML == inner && cell[2].innerHTML == inner) &&
+            (cell[3].innerHTML == inner && cell[4].innerHTML == inner && cell[5].innerHTML == inner) &&
+            (cell[6].innerHTML == inner && cell[7].innerHTML == inner && cell[8].innerHTML == inner) &&
+            (cell[0].innerHTML == inner && cell[3].innerHTML == inner && cell[6].innerHTML == inner) &&
+            (cell[1].innerHTML == inner && cell[4].innerHTML == inner && cell[7].innerHTML == inner) &&
+            (cell[2].innerHTML == inner && cell[5].innerHTML == inner && cell[8].innerHTML == inner) &&
+            (cell[0].innerHTML == inner && cell[4].innerHTML == inner && cell[8].innerHTML == inner) &&
+            (cell[2].innerHTML == inner && cell[4].innerHTML == inner && cell[6].innerHTML == inner)
+){
+    document.getElementById("res").innerHTML="No Result"
+}
+
+        if ((cell[0].innerHTML == inner && cell[1].innerHTML == inner && cell[2].innerHTML == inner) ||
+            (cell[3].innerHTML == inner && cell[4].innerHTML == inner && cell[5].innerHTML == inner) ||
+            (cell[6].innerHTML == inner && cell[7].innerHTML == inner && cell[8].innerHTML == inner) ||
+            (cell[0].innerHTML == inner && cell[3].innerHTML == inner && cell[6].innerHTML == inner) ||
+            (cell[1].innerHTML == inner && cell[4].innerHTML == inner && cell[7].innerHTML == inner) ||
+            (cell[2].innerHTML == inner && cell[5].innerHTML == inner && cell[8].innerHTML == inner) ||
+            (cell[0].innerHTML == inner && cell[4].innerHTML == inner && cell[8].innerHTML == inner) ||
+            (cell[2].innerHTML == inner && cell[4].innerHTML == inner && cell[6].innerHTML == inner)) {
+            
+            gameOver = true;
+            highlightWinningCells(inner);
+            document.getElementById("res").innerHTML = `${inner} wins`;
+        }
+    }
+});
+
+function playAudio() {
+    var audio = document.getElementById("audio");
+    var audio1 = document.getElementById("audio1");
+    audio.play();
+    audio1.play();
+}
+
+function highlightWinningCells(inner) {
+    var cell = document.querySelectorAll(".cell");
+    if (cell[0].innerHTML == inner && cell[1].innerHTML == inner && cell[2].innerHTML == inner) {
+        cell[0].className = "scale";
+        cell[1].className = "scale";
+        cell[2].className = "scale";
+    }
+    if (cell[3].innerHTML == inner && cell[4].innerHTML == inner && cell[5].innerHTML == inner) {
+        cell[3].className = "scale";
+        cell[4].className = "scale";
+        cell[5].className = "scale";
+    }
+    if (cell[6].innerHTML == inner && cell[7].innerHTML == inner && cell[8].innerHTML == inner) {
+        cell[6].className = "scale";
+        cell[7].className = "scale";
+        cell[8].className = "scale";
+    }
+    if (cell[0].innerHTML == inner && cell[3].innerHTML == inner && cell[6].innerHTML == inner) {
+        cell[0].className = "scale";
+        cell[3].className = "scale";
+        cell[6].className = "scale";
+    }
+    if (cell[1].innerHTML == inner && cell[4].innerHTML == inner && cell[7].innerHTML == inner) {
+        cell[1].className = "scale";
+        cell[4].className = "scale";
+        cell[7].className = "scale";
+    }
+    if (cell[2].innerHTML == inner && cell[5].innerHTML == inner && cell[8].innerHTML == inner) {
+        cell[2].className = "scale";
+        cell[5].className = "scale";
+        cell[8].className = "scale";
+    }
+    if (cell[0].innerHTML == inner && cell[4].innerHTML == inner && cell[8].innerHTML == inner) {
+        cell[0].className = "scale";
+        cell[4].className = "scale";
+        cell[8].className = "scale";
+    }
+    if (cell[2].innerHTML == inner && cell[4].innerHTML == inner && cell[6].innerHTML == inner) {
+        cell[2].className = "scale";
+        cell[4].className = "scale";
+        cell[6].className = "scale";
+    }
+}
+
+document.getElementById("reset").addEventListener("click", () => {
+    location.reload();
+});
     </script>
 </body>
 </html>
+
 
