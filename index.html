@@ -32,9 +32,11 @@
         }
 
         .cell {
+
             font-family: play;
             color: rgb(191, 191, 191);
-
+transform: scale(1);
+transition: 0.9s ease;
             text-transform: capitalize;
             font-weight: 900;
             width: 100px;
@@ -97,6 +99,7 @@
         font-family: play !important;
             align-items: center;
             display: flex;
+            /* transform: scale(1.1); */
             font-weight: bolder;
             justify-content: center;
             flex-direction: row;
@@ -116,13 +119,16 @@
     </style>
 </head>
 <body>
-    <audio id="audio">
-        <source src="notif.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
     <div class="container">
         <div id="board">
             <div class="cell" id="cell-0" style="border-right:2px dotted grey ;border-bottom:2px dotted grey;" data-index="0"></div>
+            <audio id="audio">
+                <source src="duolingo_wrong.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>     <audio id="audio1">
+                <source src="duolingo_wrong.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
             <div class="cell" id="cell-1" style="border-right:2px dotted grey;border-bottom:2px dotted grey;" data-index="1"></div>
             <div class="cell" id="cell-2" style="border-bottom:2px dotted grey;" data-index="2"></div>
             <div class="cell" id="cell-3" style="border-right:2px dotted grey;border-bottom:2px dotted grey;" data-index="3"></div>
@@ -130,7 +136,7 @@
             <div class="cell" id="cell-5" style="border-bottom:2px dotted grey;" data-index="5"></div>
             <div class="cell" id="cell-6" style="border-right:2px dotted grey;" data-index="6"></div>
             <div class="cell" id="cell-7" style="border-right:2px dotted grey;" data-index="7"></div>
-            <div class="cell" id="cell-8" style="" data-index="8"></div>
+            <div class="cell" id="cell-8" data-index="8"></div>
         </div>
         <div id="cont">
             <h1 id="res" style="font-size: 34px !important;"></h1>
@@ -139,12 +145,9 @@
         <button id="reset">Reset</button>
     </div>
     <script>
-        function playAudio() {
-            var audio = document.getElementById("audio");
-            audio.play();
-        }
 
         document.addEventListener("click", (e) => {
+
             var target = e.target.getAttribute("data-index");
             var cell = document.querySelectorAll(".cell");
             var arr = [];
@@ -153,7 +156,14 @@
             if (target !== null) {
                 if (cell[target].innerHTML === "") {
                     cell[target].innerHTML = "X";
-                    playAudio();
+                 
+                    function playAudio() {
+            var audio = document.getElementById("audio");
+            var audio1 = document.getElementById("audio1");
+            audio.play();
+            audio1.play();
+        }
+        playAudio()
                     arr1.push(target);
                     check("X");
                 } else {
@@ -165,7 +175,13 @@
 
                     if (!arr.includes(ran) && cell[ran].innerHTML == "") {
                         cell[ran].innerHTML = "O";
-                        playAudio();
+                        function playAudio() {
+            var audio = document.getElementById("audio");
+            var audio1 = document.getElementById("audio1");
+            audio.play();
+            audio1.play();
+        }
+        playAudio()
                         check("O");
                         break;
                     }
