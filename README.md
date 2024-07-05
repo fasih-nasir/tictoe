@@ -35,8 +35,8 @@ Winning can occur in the following ways:
 - **Corners**: Occupying corners can also lead to strategic advantages.
 
 ## 📸 Screenshots
+![image](https://github.com/fasih-nasir/tictoe/assets/154458171/b0a8ce6c-9732-44c8-988c-7026ed811bec)
 
-[![image](https://github.com/Fasih-Nasir/tictoe/assets/154458171/7dad2311-6a9b-480c-b40a-5129f42c83b1)]
 
 ## 🛠️ Technologies Used
 
